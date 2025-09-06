@@ -1,164 +1,202 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { TextEffect } from "@/components/motion-primitives/text-effect";
-import { AnimatedGroup } from "@/components/motion-primitives/animated-group";
-import { HeroHeader } from "@/components/header";
+"use client";
 
-const transitionVariants = {
-  item: {
-    hidden: {
-      opacity: 0,
-      filter: "blur(12px)",
-      y: 12,
-    },
-    visible: {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      transition: {
-        type: "spring",
-        bounce: 0.3,
-        duration: 1.5,
-      },
-    },
-  },
-};
+import type React from "react";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { AnimatedGroup } from "./motion-primitives/animated-group";
 
-export default function HeroSection() {
+export function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
+
   return (
-    <>
-      <HeroHeader />
-      <main className="overflow-hidden">
-        <section id="home">
-          <div className="relative pt-24 md:pt-36">
-            <div className="mx-auto max-w-[1400px] px-6">
-              <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
-                <AnimatedGroup variants={transitionVariants}>
-                  <Link
-                    href="#link"
-                    className="hover:bg-white/20 bg-white/10 backdrop-blur-sm group mx-auto flex w-fit items-center gap-4 rounded-full border border-white/20 p-1 pl-4 shadow-lg transition-colors duration-300"
-                  >
-                    <span className="text-[#042648] text-xs sm:text-sm font-medium">
-                      Africa's First Interoperable Healthcare Platform
-                    </span>
-                    <span className="block h-4 w-0.5 border-l border-[#042648]/20 bg-[#042648]/20"></span>
+    <section id="contact" className="py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimatedGroup>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--clinify-dark-blue)] mb-6">
+              Get in Touch
+            </h2>
+            <p className="text-lg text-[var(--clinify-dark-gray)] max-w-2xl mx-auto">
+              Ready to transform your healthcare management? Contact us today
+              and let's discuss how CLINIFY can help your organization.
+            </p>
+          </div>
 
-                    <div className="bg-white/20 group-hover:bg-white/30 size-6 overflow-hidden rounded-full duration-500">
-                      <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
-                        <span className="flex size-6">
-                          <ArrowRight className="m-auto size-3 text-[#042648]" />
-                        </span>
-                        <span className="flex size-6">
-                          <ArrowRight className="m-auto size-3 text-[#042648]" />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </AnimatedGroup>
-
-                <TextEffect
-                  preset="fade-in-blur"
-                  speedSegment={0.3}
-                  as="h1"
-                  className="mx-auto mt-6 sm:mt-8 lg:mt-16 max-w-5xl text-balance text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#042648] font-semibold leading-tight"
-                >
-                  Centralized Healthcare Systems for Africa
-                </TextEffect>
-
-                <TextEffect
-                  per="line"
-                  preset="fade-in-blur"
-                  speedSegment={0.3}
-                  delay={0.5}
-                  as="p"
-                  className="mx-auto mt-4 sm:mt-6 lg:mt-8 max-w-3xl text-balance text-base sm:text-lg lg:text-xl text-[#333333] leading-relaxed px-4 sm:px-0"
-                >
-                  Streamline healthcare operations with our interoperable
-                  platform designed for African healthcare systems.
-                </TextEffect>
-
-                <AnimatedGroup
-                  variants={{
-                    container: {
-                      visible: {
-                        transition: {
-                          staggerChildren: 0.05,
-                          delayChildren: 0.75,
-                        },
-                      },
-                    },
-                    ...transitionVariants,
-                  }}
-                  className="mt-8 sm:mt-10 lg:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
-                >
-                  <div
-                    key={1}
-                    className="bg-[#00ABE2]/20 rounded-[calc(var(--radius-xl)+0.125rem)] border border-[#00ABE2]/30 p-0.5"
-                  >
-                    <Button
-                      asChild
-                      size="lg"
-                      className="rounded-xl px-6 sm:px-8 text-base bg-[#00ABE2] hover:bg-[#042648] text-white"
-                    >
-                      <Link href="#link">
-                        <span className="text-nowrap">Get Started</span>
-                      </Link>
-                    </Button>
-                  </div>
-                  <Button
-                    key={2}
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className="h-10.5 rounded-xl px-6 sm:px-8 text-[#042648] hover:bg-white/20"
-                  >
-                    <Link href="#link">
-                      <span className="text-nowrap">Book a Demo</span>
-                    </Link>
-                  </Button>
-                </AnimatedGroup>
-              </div>
-            </div>
-
-            <AnimatedGroup
-              variants={{
-                container: {
-                  visible: {
-                    transition: {
-                      staggerChildren: 0.05,
-                      delayChildren: 0.75,
-                    },
-                  },
-                },
-                ...transitionVariants,
-              }}
-            >
-              <div className="relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20 md:-mr-56 lg:mr-0">
-                <div
-                  aria-hidden
-                  className="bg-gradient-to-b to-white/80 absolute inset-0 z-10 from-transparent from-35%"
-                />
-                <div className="bg-white/20 backdrop-blur-sm relative mx-auto max-w-[1200px] overflow-hidden rounded-2xl border border-white/30 p-4 shadow-xl">
-                  <Image
-                    className="relative rounded-2xl object-cover object-center"
-                    src="/images/dashboard-hero.svg"
-                    alt="CLINIFY Dashboard"
-                    width="2700"
-                    height="1440"
-                    style={{
-                      aspectRatio: "16/9",
-                      objectFit: "cover",
-                      objectPosition: "center top",
-                    }}
+          <div className="max-w-2xl mx-auto">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="peer w-full px-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-[var(--clinify-blue)] transition-all duration-300 outline-none bg-white placeholder-transparent"
+                    placeholder="Enter your full name"
                   />
+                  <label
+                    htmlFor="name"
+                    className="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-[var(--clinify-dark-blue)] transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[var(--clinify-blue)]"
+                  >
+                    Full Name
+                  </label>
+                </div>
+                <div className="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="peer w-full px-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-[var(--clinify-blue)] transition-all duration-300 outline-none bg-white placeholder-transparent"
+                    placeholder="Enter your email address"
+                  />
+                  <label
+                    htmlFor="email"
+                    className="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-[var(--clinify-dark-blue)] transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[var(--clinify-blue)]"
+                  >
+                    Email Address
+                  </label>
                 </div>
               </div>
-            </AnimatedGroup>
+
+              <div className="relative">
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={6}
+                  className="peer w-full px-4 py-4 border-2 border-gray-200 rounded-2xl focus:border-[var(--clinify-blue)] transition-all duration-300 outline-none resize-none bg-white placeholder-transparent"
+                  placeholder="Tell us about your healthcare management needs..."
+                />
+                <label
+                  htmlFor="message"
+                  className="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-[var(--clinify-dark-blue)] transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[var(--clinify-blue)]"
+                >
+                  Message
+                </label>
+              </div>
+
+              <div className="text-center">
+                <Button
+                  type="submit"
+                  className="bg-[var(--clinify-blue)] hover:bg-[var(--clinify-dark-blue)] text-white px-12 py-4 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 text-lg"
+                >
+                  Send Message
+                </Button>
+              </div>
+            </form>
+
+            <div className="mt-16 text-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                  <div className="w-12 h-12 bg-[var(--clinify-blue)] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-[var(--clinify-dark-blue)] mb-2">
+                    Email Us
+                  </h3>
+                  <p className="text-[var(--clinify-dark-gray)]">
+                    info@clinify.com
+                  </p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                  <div className="w-12 h-12 bg-[var(--clinify-blue)] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-[var(--clinify-dark-blue)] mb-2">
+                    Call Us
+                  </h3>
+                  <p className="text-[var(--clinify-dark-gray)]">
+                    +234 (0) 123 456 7890
+                  </p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                  <div className="w-12 h-12 bg-[var(--clinify-blue)] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg
+                      className="w-6 h-6 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-[var(--clinify-dark-blue)] mb-2">
+                    Visit Us
+                  </h3>
+                  <p className="text-[var(--clinify-dark-gray)]">
+                    Lagos, Nigeria
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </section>
-      </main>
-    </>
+        </AnimatedGroup>
+      </div>
+    </section>
   );
 }
+
+export default ContactSection;
